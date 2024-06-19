@@ -24,7 +24,7 @@ function ProfileContent({ role, name }) {
     const confirmLogout = async () => {
         try {
             axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-            const response = await axios.post('http://localhost:8000/auth/logout')
+            const response = await axios.post('https://mofera-backend-fork-ten.vercel.app/auth/logout')
 
             localStorage.removeItem('token');
 
@@ -42,7 +42,7 @@ function ProfileContent({ role, name }) {
     const confirmDelete = async () => {
         try {
             axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-            const response = await axios.delete('http://localhost:8000/auth/delete')
+            const response = await axios.delete('https://mofera-backend-fork-ten.vercel.app/auth/delete')
 
             localStorage.removeItem('token');
 

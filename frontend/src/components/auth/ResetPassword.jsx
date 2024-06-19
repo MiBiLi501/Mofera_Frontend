@@ -40,7 +40,7 @@ function ResetPassword() {
     }
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/reset-password', {
+      const response = await axios.post('https://mofera-backend-fork-ten.vercel.app/auth/reset-password', {
         token,
         new_password: password
       });

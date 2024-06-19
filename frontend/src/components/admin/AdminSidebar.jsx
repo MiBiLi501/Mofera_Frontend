@@ -291,7 +291,7 @@ function AdminSidebar({ isMinimized, toggleMenu, onPageDataChange }) {
   const handleLogout = async () => {
     try {
       axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-      const response = await axios.post('http://localhost:8000/auth/logout')
+      const response = await axios.post('https://mofera-backend-fork-ten.vercel.app/auth/logout')
 
       localStorage.removeItem('token');
 

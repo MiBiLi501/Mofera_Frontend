@@ -63,7 +63,7 @@ function App() {
     async function fetchUserRole() {
       try {
         axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-        const response = await axios.get('http://localhost:8000/auth/role');
+        const response = await axios.get('https://mofera-backend-fork-ten.vercel.app/auth/role');
         console.log(response)
         if (response && response.data) {
           setUserRole(response.data.role);

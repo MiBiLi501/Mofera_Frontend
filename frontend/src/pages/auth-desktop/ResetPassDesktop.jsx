@@ -34,7 +34,7 @@ function ResetPassDesktop() {
         }
 
         try {
-            const response = await axios.post('http://localhost:8000/auth/reset-password', {
+            const response = await axios.post('https://mofera-backend-fork-ten.vercel.app/auth/reset-password', {
                 email,
                 new_password: password
             });

@@ -1,1 +1,1 @@
-export const URL = "http://127.0.0.1:8000"
+export const URL = "https://mofera-backend-fork-ten.vercel.app/"

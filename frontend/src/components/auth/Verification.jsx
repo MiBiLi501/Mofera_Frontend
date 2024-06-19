@@ -36,7 +36,7 @@ function Verification() {
     event.preventDefault();
 
     try {
-      const response = await axios.post('http://localhost:8000/auth/forgot-password', {
+      const response = await axios.post('https://mofera-backend-fork-ten.vercel.app/auth/forgot-password', {
         email
       });
       setMessage('Password reset email sent');
