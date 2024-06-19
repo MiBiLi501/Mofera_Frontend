@@ -211,16 +211,18 @@ function Register() {
               <div className='flex justify-center items-center mt-7'>
                 <img src={componentImg} className='w-3/4'></img>
               </div>
-              <div className="text-xs flex items-center justify-center gap-1 mt-5 pb-24">
+              <div className="text-xs flex items-center justify-center gap-1 mt-5">
                 <p> Already have an account? </p>
                 <p className="text-primary font-bold underline" onClick={navigatetoLogin}>
                   Login here
                 </p>
               </div>
             </div>
+
+            <img src={bottomFrame} className='relative -mt-24' />
           </Card>
 
-          <img src={bottomFrame} className='fixed bottom-0' />
+          
         </div>
       )}
     </div>

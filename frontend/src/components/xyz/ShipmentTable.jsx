@@ -1,3 +1,4 @@
+import DataTable,{ createTheme } from 'react-data-table-component';
 import React,{useState, useEffect } from 'react';
 import {
   Table,
@@ -10,14 +11,40 @@ import {
 } from "@nextui-org/react";
 
 const columns = [
-  { key: "id", label: "Checkpoint ID" },
-  { key: "shipping_id", label: "From Shipping" },
-  { key: "total_packages", label: "Quantity" },
-  { key: "arrival_datetime", label: "Arrival Datetime" },
-  { key: "note", label: "Description Note" },
+    {
+      key: "id",
+      label: "ID",
+    },
+
+    {
+      key: "dateShipped",
+      label: "Departure Date",
+    },
+    {
+      key: "etaDatetime",
+      label: "Estimated Arrival"
+    },
+
+    {
+      key: "weight",
+      label: "Total Weight",
+    },
+
+    {
+      key: "totalPackages",
+      label: "Total Packages",
+    },
+    {
+      key: "expedition",
+      label: "Expedition",
+    },
+    {
+      key: "fromCentra",
+      label: "Centra ID",
+    }
 ];
   
-function CheckPointTable({ data }) {
+function ShipmentTable({ data }) {
   const itemsPerPage = 7;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -55,7 +82,7 @@ function CheckPointTable({ data }) {
             <TableRow key={item.id}>
               {columns.map((column) => (
                 <TableCell key={column.key} className="text-base">
-                  {column.key === "arrival_datetime"
+                  {column.key === "dateShipped" || column.key === "etaDatetime"
                     ? formatDateTime(item[column.key])
                     : item[column.key]}
                 </TableCell>
@@ -77,4 +104,4 @@ function CheckPointTable({ data }) {
 	);
 };
 
-export default CheckPointTable;
+export default ShipmentTable;

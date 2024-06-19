@@ -9,18 +9,24 @@ import {
   getKeyValue,
   Button,
   Pagination,
+  Popover,
+  Checkbox,
+  PopoverTrigger,
+  PopoverContent,
 } from "@nextui-org/react";
 import "../../style/AdminDesktop.css";
 import { initialRows, columns } from "./UserDataSample";
 import EditUserButton from "./EditUserButton";
 
 const centraOptions = Array.from({ length: 32 }, (_, i) => i + 1);
+const statusOptions = ["Ready to Ship", "Shipping", "Confirmed Arrival", "Collected", "Expired"].map(status => ({ value: status, label: status }));
 
 function AdminTable({ rows, columns, deleteRow, editRow, pageName }) {
   const [currentPage, SetCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc");
   const [selectedCentra, setSelectedCentra] = useState(0);
+  const [selectedStatuses, setSelectedStatuses] = useState([]); // State to track selected statuses
 
   const itemsPerPage = 5;
 
@@ -34,6 +40,14 @@ function AdminTable({ rows, columns, deleteRow, editRow, pageName }) {
 
   const handleCentraChange = (e) => {
     setSelectedCentra(e.target.value);
+  };
+
+  const handleStatusChange = (value) => {
+    setSelectedStatuses((prevStatuses) =>
+      prevStatuses.includes(value)
+        ? prevStatuses.filter((status) => status !== value)
+        : [...prevStatuses, value]
+    );
   };
 
   const handlePageChange = (page) => {
@@ -54,6 +68,10 @@ function AdminTable({ rows, columns, deleteRow, editRow, pageName }) {
     filteredRows = rows;
   }
 
+  if (selectedStatuses.length > 0) {
+    filteredRows = filteredRows.filter((row) => selectedStatuses.includes(row.status));
+  }
+
   const sortedData = [...filteredRows].sort((a, b) => {
     if (!sortBy) return 0;
     const aValue = sortBy === "created_datetime" ? new Date(a[sortBy]) : a[sortBy];
@@ -68,22 +86,57 @@ function AdminTable({ rows, columns, deleteRow, editRow, pageName }) {
 
   return (
     <div className="flex flex-col w-97/100 pl-14 items-center gap-8 border-collapse">
-      <div className="flex justify-end w-full">
+      <div className="flex justify-end w-full gap-4">
         {pageName !== "CentraData" && pageName !== "CheckpointData" ? (
-          <form className="w-40">
-            <select
-              className="flex bg-quinary border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-4"
-              onChange={handleCentraChange}
-              value={selectedCentra}
-            >
-              <option value="">Select Centra</option>
-              {centraOptions.map((centra) => (
-                <option key={centra} value={centra}>
-                  Centra {centra}
-                </option>
-              ))}
-            </select>
-          </form>
+          <>
+            <form className="w-40">
+              <select
+                className="flex bg-quinary border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-4"
+                onChange={handleCentraChange}
+                value={selectedCentra}
+              >
+                <option value="">Select Centra</option>
+                {centraOptions.map((centra) => (
+                  <option key={centra} value={centra}>
+                    Centra {centra}
+                  </option>
+                ))}
+              </select>
+            </form>
+            <div className="w-40">
+              <Popover placement="bottom-left">
+                <PopoverTrigger>
+                  <Button 
+                    auto 
+                    flat 
+                    color="primary"
+                    style={{
+                      backgroundColor: '#F0F0F0', // Light background color
+                      border: '2px solid #D4AF37', // Gold border
+                      color: '#4B5320', // Dark green text color
+                      borderRadius: '15px', // Rounded corners
+                    }}
+                  >
+                    Select Status
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="p-4 flex flex-col gap-2">
+                    {statusOptions.map((status) => (
+                      <Checkbox
+                        key={status.value}
+                        isSelected={selectedStatuses.includes(status.value)}
+                        onChange={() => handleStatusChange(status.value)}
+                        color="primary"
+                      >
+                        {status.label}
+                      </Checkbox>
+                    ))}
+                  </div>
+                </PopoverContent>
+              </Popover>
+            </div>
+          </>
         ) : null}
       </div>
 
@@ -146,4 +199,3 @@ function AdminTable({ rows, columns, deleteRow, editRow, pageName }) {
 }
 
 export default AdminTable;
-

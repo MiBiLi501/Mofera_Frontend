@@ -56,9 +56,7 @@ function ShippingForm() {
         return weight > 0 && expedition && shippingDate && shippingTime && etaDate && etaTime && packages.length > 0;
     };
 
-    function handleSubmit(event) {
-        event.preventDefault();
-
+    function handleSubmit() {
         if (validateForm()) {
             const data = {
                 packages,

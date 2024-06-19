@@ -137,7 +137,7 @@ function Login() {
                 <p className='text-primary font-bold underline' onClick={navigatetoSignup}> Sign Up</p>
               </div>
 
-              <img src={botFrame} className='w-screen absolute bottom-0'/>
+              <img src={botFrame} className='relative mt-32'/>
             </Card>
           </div>
         </>

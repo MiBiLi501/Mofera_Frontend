@@ -51,8 +51,7 @@ function CheckpointForm() {
         return shippingId && arrivalDate && arrivalTime && selectedPackageIDs.length > 0;
     };
 
-    async function handleSubmit(event) {
-        event.preventDefault();
+    async function handleSubmit() {
         const arrival_datetime = `${arrivalDate}T${arrivalTime}`;
         const data = {
             shipping_id: shippingId,

@@ -227,8 +227,8 @@ function CentraDashboardHomePage() {
                     >
                       <div className="flex justify-center items-center">
                         <div className="w-[90%] rounded-2xl bg-white">
-                          <form className="absolute top-2 right-7 h-10 w-20">
-                            <select id="times" className="bg-quaternary border border-primary text-primary text-sm 
+                          <form className="absolute top-1 right-7 h-10 w-20">
+                            <select id="times" className="bg-transparent border border-primary text-primary text-sm 
                             focus:ring-primary focus:border-primary block w-full p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full py-1 px-1"
                             onChange={(e) => setStatsFilter(e.target.value)}>
                               <option value="daily">Daily</option>

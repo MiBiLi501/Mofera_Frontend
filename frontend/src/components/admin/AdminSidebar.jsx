@@ -22,7 +22,7 @@ import {
 import axios from 'axios';
 import MasterDataFolder from './MasterDataFolder';
 
-function AdminSidebar({ isMinimized, toggleMenu, onPageDataChange }) {
+function AdminSidebar({ isMinimized, toggleMenu, onPageDataChange, refresh }) {
   const [dataManagementOpen, setDataManagementOpen] = useState(false);
   const [hoveredItem, setHoveredItem] = useState(null); 
   const [centraRows, setCentraRows] = useState([]);
@@ -286,7 +286,7 @@ function AdminSidebar({ isMinimized, toggleMenu, onPageDataChange }) {
     fetchWetData();
     fetchPackageData();
     fetchShippingData();
-  }, []);
+  }, [refresh]);
 
   const handleLogout = async () => {
     try {

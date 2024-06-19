@@ -62,6 +62,7 @@ function AdminPage() {
   const [filteredRows, setFilteredRows] = useState([]);
   const [isMinimized, setIsMinimized] = useState(false);
   const [selectedRole, setSelectedRole] = useState("");
+  const [refresh, setRefresh] = useState(false);
   const [pageData, setPageData] = useState({
     title: "Manage Users",
     description: "Arrange username and data collections of ID",
@@ -106,10 +107,12 @@ function AdminPage() {
   useEffect(() => {
     window.addEventListener('resize', handleResize);
     handleResize();
+    setRefresh(false);
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [refresh]);
+  
 
   const addCentra = async (newCentra) => {
     console.log("Adding new centra:", newCentra);
@@ -171,40 +174,48 @@ function AdminPage() {
         case "AdminTable":
           await deleteUser(id);
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
+          setRefresh(true)
           break;
         case "CentraData":
           await deleteCentra(id);
           console.log("Deleted Centra with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "CheckpointData":
           await deleteCheckpoint(id);
           console.log("Deleted Checkpoint with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "WetLeavesData":
           await deleteWetLeaves(id);
           console.log("Deleted Wet Leaves with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "DryLeavesData":
           await deleteDryLeaves(id);
           console.log("Deleted Dry Leaves with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "FlourData":
           await deleteFlour(id);
           console.log("Deleted Flour with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "ShippingInfoData":
           await deleteShippingInfo(id);
           console.log("Deleted Shipping Info with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         case "PackageData":
           await deletePackage(id);
           console.log("Deleted Package with id:", id);
+          setRefresh(true)
           setRows((prevRows) => prevRows.filter((row) => row.id !== id));
           break;
         default:
@@ -395,6 +406,7 @@ function AdminPage() {
         isMinimized={isMinimized}
         toggleMenu={toggleMenu}
         onPageDataChange={handlePageDataChange}
+        refresh={refresh}
       />
       <div
         className={`bg-white h-97vh rounded-3xl transition-all duration-300 ${
@@ -402,7 +414,7 @@ function AdminPage() {
         }`}
       >
         <PageTitleAll title={pageData.title} description={pageData.description} />
-        <UserProfile />
+        
         
         <div className="flex justify-around items-center pr-10">
             <div className="grow">
