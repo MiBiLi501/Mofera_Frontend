@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 import profilepic from "../../../assets/desktop/profilepicdesktop.svg";
 import mascot from "../../../assets/xyz/half-mascot.svg";
-import { getWetLeafDatas, getWetStats } from '../../../../api/xyzAPI';
+import { getWetLeafDatas, getWetStats, getWetSummary } from '../../../../api/xyzAPI';
 
 const WetDashboard = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
@@ -55,6 +55,11 @@ const WetDashboard = () => {
     fetchLineData();
   }, [trendFilter, centraFilter]);
 
+  const [wetSummary, setWetSummary] = useState({
+    "total": 0,
+    "monthly": 0,
+    "today": 0
+  })
   useEffect(() => {
     const fetchWetData = async () => {
       const response = await getWetLeafDatas();
@@ -69,7 +74,18 @@ const WetDashboard = () => {
       }
     };
     fetchWetData();
+
+    const fetchWetSummary = async () => {
+      const response = await getWetSummary()
+      if(response && response.data) {
+        setWetSummary(response.data)
+      }
+    }
+
+    fetchWetSummary();
   }, []);
+
+
 
   const filteredWetDatas = wetDatas.filter(data => data.centra_id === parseInt(centraFilter));
 
@@ -160,19 +176,19 @@ const WetDashboard = () => {
               <div className="h-24 bg-quinary rounded-3xl flex items-center justify-center dark:bg-gray-800 p-4">
                 <div>
                   <p className="text-sm">Total Wet Leaves <br /> Collected:</p>
-                  <p className="text-lg font-bold">10,300 kg</p>
+                  <p className="text-lg font-bold">{wetSummary.total.toFixed(2)} kg</p>
                 </div>
               </div>
               <div className="h-24 bg-quinary rounded-3xl flex items-center justify-center dark:bg-gray-800 p-4">
                 <div>
                   <p className="text-sm">Average Wet Leaves Collected Each Day:</p>
-                  <p className="text-lg font-bold">500 kg</p>
+                  <p className="text-lg font-bold">{wetSummary.monthly.toFixed(2)} kg</p>
                 </div>
               </div>
               <div className="h-24 bg-quinary rounded-3xl flex items-center justify-center dark:bg-gray-800 p-4">
                 <div>
-                  <p className="text-sm">Total Wet Leaves <br /> Disposed:</p>
-                  <p className="text-lg font-bold">102 kg</p>
+                  <p className="text-sm">Today's Wet Leaves <br /> Collected:</p>
+                  <p className="text-lg font-bold">{wetSummary.today.toFixed(2)} kg</p>
                 </div>
               </div>
             </div>
