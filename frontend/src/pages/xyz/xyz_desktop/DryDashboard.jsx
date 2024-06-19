@@ -11,24 +11,15 @@ import { motion } from "framer-motion";
 import profilepic from "../../../assets/desktop/profilepicdesktop.svg";
 import mascot from "../../../assets/xyz/half-mascot.svg";
 import { getDryLeafDatas, getDryStats, getDrySummary } from '../../../../api/xyzAPI';
-
-// const activities = [
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-10@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-9@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-22@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-18@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-10@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-9@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-22@2x.png' },
-//   { day: new Date().toLocaleString(), time: '10 mins ago', description: 'Centra 1 just added 30kg of dry leaves data into the system.', image: 'src/assets/DashboardDesktop/ellipse-18@2x.png' },
-
-// ];
+import { getCurrentUser } from '../../../../api/profileAPI';
+import EditProfileDesktop from './EditProfileDesktop';
 
 const DryDashboard = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-  const [centraFilter, setCentraFilter] = useState("1");
+  const [centraFilter, setCentraFilter] = useState("0");
   const [statsFilter, setStatsFilter] = useState("daily");
   const [trendFilter, setTrendFilter] = useState("daily");
+  const [username, setUsername] = useState("Loading");
   const [activities, setActivities] = useState([])
 
   const toggleSidebar = () => {
@@ -49,6 +40,12 @@ const DryDashboard = () => {
       fetchBarData();
       
   }, [statsFilter, centraFilter]);
+
+  const formatDate = (dateStr) => {
+    const date = new Date(dateStr);
+    const options = { day: 'numeric', month: 'long', year: 'numeric' };
+    return date.toLocaleDateString('en-GB', options);
+  };
 
   useEffect(() => {
     const fetchLineData = async () => {
@@ -91,7 +88,16 @@ const DryDashboard = () => {
 
       fetchDrySummary();
       console.log(drySummary)
+
+      
+      const fetchUsername = async () => {
+        const user = await getCurrentUser();
+        setUsername(user.username);
+      }
+      fetchUsername();
   }, [])
+
+  const filteredDryDatas = centraFilter === "0" ? dryDatas : dryDatas.filter(data => data.centra_id === parseInt(centraFilter));
 
   return (
     <div className="bg-primary w-screen h-screen flex relative">
@@ -99,23 +105,23 @@ const DryDashboard = () => {
       <div className="flex-1 bg-white rounded-3xl mt-3 mr-3 mb-3 p-4 flex flex-col overflow-hidden relative">
         <div className="flex justify-between items-center mb-5">
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="flex items-center justify-around h-28 p-8 bg-quinary rounded-3xl dark:bg-gray-800">
-              <div className="flex items-center">
-                <h2 className="text-4xl font-bold">Hello Maimunah!</h2>
-                <img src={mascot} alt="mascot" className="ml-10" style={{ height: "112px" }} />
+            <div className="flex items-center justify-between h-28 p-8 bg-quinary rounded-3xl dark:bg-gray-800">
+              <div className="flex items-center flex-grow">
+                <h2 className="text-4xl font-bold">Hello {username}!</h2>
               </div>
-          </div>
+              <img src={mascot} alt="mascot" style={{ height: "112px" }} />
+            </div>
 
             <div className="flex items-center justify-center gap-20 h-22 rounded dark:bg-gray-800">
               <div>
                 <SearchForm isSidebarMinimized={isSidebarMinimized} />
               </div>
-              <div className="p-4 bg-quinary rounded-full absolute right-0 top-0 mr-32 mt-11">
-                <a href="/dashboard"><IoNotifications className="text-2xl" /></a>
+              <div className="p-2 bg-quinary rounded-full absolute right-0 top-0 mr-28 mt-12">
+                <a href="/notifications"><IoNotifications className="text-2xl" /></a>
               </div>
               <div>
                 <span className="flex items-center mr-6 mt-6">
-                  <img src={profilepic} alt='profile picture' className='flex align-right mb-6 absolute right-0 top-0 mr-12 mt-12'/>
+                  <EditProfileDesktop />
                 </span>
               </div>
             </div>
@@ -132,19 +138,10 @@ const DryDashboard = () => {
               <select id="times" className="bg-quinary border border-primary text-black text-sm 
                 focus:ring-primary focus:border-primary block w-full p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-xl py-1 px-2"
                 onChange={(e) => setCentraFilter(e.target.value)} >
-                  <option value="1">Select Centra</option>
-                  <option value="1">Select Centra 1</option>
-                  <option value="2">Select Centra 2</option>
-                  <option value="3">Select Centra 3</option>
-                </select>
-              </form>
-              <form className="h-10 w-28">
-               <select id="times" className="bg-quinary border border-primary text-black text-sm 
-                focus:ring-primary focus:border-primary block w-full p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-xl py-1 px-2">
-                  <option>Filter</option>
-                  <option>Filter 1</option>
-                  <option>Filter 2</option>
-                  <option>Filter 3</option>
+                    <option key={0} value={0}>{"All Centra"}</option>
+                  {[...Array(32).keys()].map(i => (
+                    <option key={i + 1} value={i + 1}>{`Centra ${i + 1}`}</option>
+                  ))}
                 </select>
               </form>
             </div>
@@ -211,13 +208,13 @@ const DryDashboard = () => {
             <div className="flex h-[440px] bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
               <div className="text-2xl text-primary dark:text-gray-500 w-full">
                 <div className="text-left text-lg ml-3 text-black font-semibold">Dry Leaves Data</div>
-                <Table data={dryDatas.map((data) => {return {...data, "date":data.received_date}})}/>
+                <Table data={filteredDryDatas.map((data) => ({ ...data, "date": formatDate(data.dried_date)}))}/>
               </div>
             </div>
             <div className="flex flex-col bg-quinary rounded-3xl dark:bg-gray-800 p-4">
               <div className="text-lg text-left text-black font-semibold px-4 mt-4">Recent Activities</div>              
                 <div>
-                  <RecentActivities activities={activities} />
+                  <RecentActivities activities={centraFilter === "0" ? activities : activities.filter(activity => activity.description.includes(`Centra ${centraFilter}`))} />
                 </div>
             </div>
           </div>

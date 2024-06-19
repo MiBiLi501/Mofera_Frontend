@@ -267,7 +267,9 @@ export const searchReceptionPackages = async (id) => {
 
 export const getShippingSummary = async(data) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-    const ShippingSummary = await axios.get(URL + "/xyz/get_shipping_summary")
+    const ShippingSummary = await axios.get(URL + "/xyz/get_shipping_summary", {
+        "params":{...data}
+    })
         .catch((error) => {
             console.error(error);
         });
@@ -286,10 +288,11 @@ export const getShippingStats = async(data) => {
 }
 
 
-export const getShippingInfo = async(ShippingInfo) => {
-    console.log(ShippingInfo)
+export const getShippingInfo = async(data) => {
     axios.defaults.headers.common["Authorization"] = `Bearer ${localStorage.getItem("token")}`
-    const ShippingInfos = await axios.get(URL + "/xyz/shipping")
+    const ShippingInfos = await axios.get(URL + "/xyz/shipping", {
+        "params":{...data}
+    })
         .catch((error) => {
             console.error(error);
         });

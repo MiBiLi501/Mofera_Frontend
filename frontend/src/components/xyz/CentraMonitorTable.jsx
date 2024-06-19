@@ -46,6 +46,43 @@ const columns = [
 ];
 
 export default function CentraMonitorTable({ dataType, handleDataTypeChange }) {
+  const columns = [
+    { 
+      field: 'packageid', 
+      headerClassName: 'super-app-theme--header', 
+      headerAlign: 'center', 
+      headerName: dataType + " ID", 
+      width: 150,
+      cellClassName: 'super-app-theme--cell',
+      hideable: false,
+      filterable: false,
+      resizable: false,
+    },
+    { 
+      field: 'weight', 
+      headerClassName: 'super-app-theme--header', 
+      headerAlign: 'center', 
+      headerName: 'Weight (in kg)', 
+      type: 'number', 
+      width: 150,
+      cellClassName: 'super-app-theme--cell',
+      hideable: false,
+      filterable: false,
+      resizable: false,
+    },
+    { 
+      field: 'status', 
+      headerClassName: 'super-app-theme--header', 
+      headerAlign: 'center', 
+      headerName: 'Status', 
+      width: 290,
+      cellClassName: 'super-app-theme--cell',
+      hideable: false,
+      filterable: false,
+      resizable: false,
+    },
+  ];
+
   // let data = []
   const [rows, setRows] = useState([]);
   const [data, setData] = useState([]);

@@ -11,12 +11,15 @@ import { motion } from "framer-motion";
 import profilepic from "../../../assets/desktop/profilepicdesktop.svg";
 import mascot from "../../../assets/xyz/half-mascot.svg";
 import { getWetLeafDatas, getWetStats, getWetSummary } from '../../../../api/xyzAPI';
+import { getCurrentUser } from '../../../../api/profileAPI';
+import EditProfileDesktop from './EditProfileDesktop';
 
 const WetDashboard = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
-  const [centraFilter, setCentraFilter] = useState("1");
+  const [centraFilter, setCentraFilter] = useState("0");
   const [statsFilter, setStatsFilter] = useState("daily");
   const [trendFilter, setTrendFilter] = useState("daily");
+  const [username, setUsername] = useState("Loading");
   const [activities, setActivities] = useState([]);
 
   const toggleSidebar = () => {
@@ -83,11 +86,17 @@ const WetDashboard = () => {
     }
 
     fetchWetSummary();
+
+    const fetchUsername = async () => {
+      const user = await getCurrentUser();
+      setUsername(user.username);
+    }
+    fetchUsername();
   }, []);
 
 
 
-  const filteredWetDatas = wetDatas.filter(data => data.centra_id === parseInt(centraFilter));
+  const filteredWetDatas = centraFilter === "0" ? wetDatas : wetDatas.filter(data => data.centra_id === parseInt(centraFilter));
 
   return (
     <div className="bg-primary w-screen h-screen flex relative">
@@ -95,23 +104,23 @@ const WetDashboard = () => {
       <div className="flex-1 bg-white rounded-3xl mt-3 mr-3 mb-3 p-4 flex flex-col overflow-hidden relative">
         <div className="flex justify-between items-center mb-5">
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="flex items-center justify-around h-28 p-8 bg-quinary rounded-3xl dark:bg-gray-800">
-              <div className="flex items-center">
-                <h2 className="text-4xl font-bold">Hello Maimunah!</h2>
-                <img src={mascot} alt="mascot" className="ml-10" style={{ height: "112px" }} />
-              </div>
+          <div className="flex items-center justify-between h-28 p-8 bg-quinary rounded-3xl dark:bg-gray-800">
+            <div className="flex items-center flex-grow">
+              <h2 className="text-4xl font-bold">Hello {username}!</h2>
             </div>
+            <img src={mascot} alt="mascot" style={{ height: "112px" }} />
+          </div>
 
             <div className="flex items-center justify-center gap-20 h-22 rounded dark:bg-gray-800">
               <div>
                 <SearchForm isSidebarMinimized={isSidebarMinimized} />
               </div>
-              <div className="p-4 bg-quinary rounded-full absolute right-0 top-0 mr-32 mt-11">
-                <a href="/dashboard"><IoNotifications className="text-2xl" /></a>
+              <div className="p-2 bg-quinary rounded-full absolute right-0 top-0 mr-28 mt-12">
+                <a href="/notifications"><IoNotifications className="text-2xl" /></a>
               </div>
               <div>
                 <span className="flex items-center mr-6 mt-6">
-                  <img src={profilepic} alt='profile picture' className='flex align-right mb-6 absolute right-0 top-0 mr-12 mt-12' />
+                  <EditProfileDesktop />
                 </span>
               </div>
             </div>
@@ -128,6 +137,7 @@ const WetDashboard = () => {
                 <select id="centra" className="bg-quinary border border-primary text-black text-sm 
                 focus:ring-primary focus:border-primary block w-full p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-xl py-1 px-2"
                   onChange={(e) => setCentraFilter(e.target.value)} >
+                    <option key={0} value={0}>{"All Centra"}</option>
                   {[...Array(32).keys()].map(i => (
                     <option key={i + 1} value={i + 1}>{`Centra ${i + 1}`}</option>
                   ))}
@@ -203,7 +213,7 @@ const WetDashboard = () => {
             <div className="flex flex-col bg-quinary rounded-3xl dark:bg-gray-800 p-4">
               <div className="text-lg text-left text-black font-semibold px-4 mt-4">Recent Activities</div>
               <div>
-                <RecentActivities activities={activities.filter(activity => activity.description.includes(`Centra ${centraFilter}`))} />
+                <RecentActivities activities={centraFilter === "0" ? activities : activities.filter(activity => activity.description.includes(`Centra ${centraFilter}`))} />
               </div>
             </div>
           </div>

@@ -11,6 +11,7 @@ import SearchForm from "../../../components/xyz/ShipmentTrackerSearch";
 import clipboard from '../../../assets/desktop/clipboard.svg';
 import settings from '../../../assets/desktop/settings.svg';
 import delivery_truck from '../../../assets/desktop/delivery_truck.svg';
+import EditProfileDesktop from './EditProfileDesktop';
 
 const shipmentData = {
     '1223123': [
@@ -61,12 +62,12 @@ const ShipmentTracker = ({ shipmentTracking }) => {
             <div className='flex-1 bg-white rounded-xl mt-3 mr-3 mb-3 p-4 flex flex-col overflow-hidden'>
                 <div className="flex justify-between items-center">
                     <h1 className='text-4xl font-semibold text-left ml-6 mt-3'>Shipment Tracker</h1>
-                    <div className="p-4 bg-quinary rounded-full absolute right-0 top-0 mr-32 mt-11">
-                        <a href="/dashboard"><IoNotifications className="text-2xl" /></a>
+                    <div className="p-2 bg-quinary rounded-full absolute right-0 top-0 mr-28 mt-12">
+                        <a href="/notifications"><IoNotifications className="text-2xl" /></a>
                     </div>
                     <div>
-                        <span className="flex items-center mr-7">
-                            <img src={profilepic} alt='profile picture' className='flex align-right right-0 top-0 mt-6'/>
+                        <span className="flex items-center mr-6 mt-6">
+                        <EditProfileDesktop />
                         </span>
                     </div>
                 </div>

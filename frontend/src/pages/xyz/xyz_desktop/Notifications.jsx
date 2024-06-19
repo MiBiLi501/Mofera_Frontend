@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Sidebar from '../../../components/xyz/Sidebar';
 import NotificationsTable from '../../../components/xyz/NotificationsTable';
 import profilepic from "../../../assets/desktop/profilepicdesktop.svg";
+import EditProfileDesktop from './EditProfileDesktop';
 
 const Notifications = ({ children }) => {
 
@@ -22,13 +23,14 @@ const Notifications = ({ children }) => {
                 <div className="flex justify-between items-center">
                     <h1 className='text-4xl font-semibold text-left ml-6 mt-3'>Shipment Notifications</h1>
 
-                    <div className="flex items-center justify-center mt-3 rounded dark:bg-gray-800 relative">
-                        <div className="p-4 bg-quinary rounded-full right-0 top-0 ml-12 mt-3 mr-6">
-                            <a href="/dashboard"><IoNotifications className="text-2xl" /></a>
+                    <div className="flex items-center justify-center mt-3 rounded dark:bg-gray-800">
+                        <div className="p-2 bg-quinary rounded-full absolute right-0 top-0 mr-28 mt-12">
+                            <a href="/notifications"><IoNotifications className="text-2xl" /></a>
                         </div>
                         <div>
-                            <span className="flex items-center mr-7">
-                                <img src={profilepic} alt='profile picture' className='flex align-right right-0 top-0 mt-3'/>
+                            <span className="flex items-center mr-6 mt-6">
+                            {/* <img src={profilepic} alt='profile picture' className='flex align-right mb-6 absolute right-0 top-0 mr-12 mt-12' /> */}
+                            <EditProfileDesktop />
                             </span>
                         </div>
                     </div>

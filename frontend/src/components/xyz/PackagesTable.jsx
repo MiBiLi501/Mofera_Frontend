@@ -24,13 +24,13 @@ const columns = [
 
 const centraOptions = Array.from({ length: 32 }, (_, i) => i + 1);
 
-function PackagesTable() {
+function PackagesTable({ searchQuery }) {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState("");
   const [sortOrder, setSortOrder] = useState("asc"); // asc or desc
   const [selectedCentra, setSelectedCentra] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 10;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -59,9 +59,14 @@ function PackagesTable() {
     setSelectedCentra(e.target.value);
   };
 
-  const filteredData = selectedCentra
-    ? data.filter((item) => String(item.centra_id) === selectedCentra)
-    : data;
+  const filteredData = data.filter((item) => {
+    return (
+      (!selectedCentra || String(item.centra_id) === selectedCentra) &&
+      (!searchQuery ||
+        item.id.toString().toLowerCase().includes(searchQuery.toLowerCase()))
+    );
+  });
+
 
   const sortedData = [...filteredData].sort((a, b) => {
     if (sortBy === "") return 0;

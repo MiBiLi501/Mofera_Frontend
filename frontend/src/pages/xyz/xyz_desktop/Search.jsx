@@ -1,4 +1,3 @@
-// src/SearchForm.js
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import './Search.css'; // For styling (create this file separately)
@@ -6,7 +5,6 @@ import { CiSearch } from "react-icons/ci";
 
 const SearchForm = ({ onSearch }) => {
   const [query, setQuery] = useState('');
-  
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -14,14 +12,12 @@ const SearchForm = ({ onSearch }) => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    //onSearch(query);
-    alert(query)
+    onSearch(query);
   };
 
   return (
     <form className="search-pill-form" onSubmit={handleSubmit}>
       <div className="search-pill-container">
-        
         <input
           type="text"
           value={query}
@@ -30,7 +26,9 @@ const SearchForm = ({ onSearch }) => {
           className="search-pill-input"
         />
       </div>
-      <button type="submit" className="search-pill-button"> <CiSearch className='text-2xl' /></button>
+      <button type="submit" className="search-pill-button">
+        <CiSearch className='text-2xl' />
+      </button>
     </form>
   );
 };

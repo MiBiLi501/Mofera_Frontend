@@ -8,6 +8,7 @@ import CentraMonitorTable from '../../../components/xyz/CentraMonitorTable';
 import CentraMonitorBar from '../../../components/xyz/CentraMonitorBar';
 import profilepic from "../../../assets/desktop/profilepicdesktop.svg";
 import { getPackageSummary } from '../../../../api/xyzAPI';
+import EditProfileDesktop from './EditProfileDesktop';
 
 const CentraActivityMonitor = () => {
   const [date, setDate] = useState(new Date());
@@ -54,25 +55,19 @@ const CentraActivityMonitor = () => {
       <div className='flex-1 bg-white rounded-3xl mt-3 mr-3 mb-3 p-4 overflow-y-auto relative'>
         <div className="flex justify-between items-center mb-5">
           <h1 className='text-4xl font-semibold text-left ml-6 mt-6'>Centra Activity Monitor</h1>
-          <div className="p-4 bg-quinary rounded-full right-0 top-0 mt-10 mr-[118px] absolute">
-            <a href="/dashboard"><IoNotifications className="text-2xl" /></a>
-          </div>
-          <span className="flex items-center mr-7">
-            <img src={profilepic} alt='profile picture' className='flex align-right right-0 top-0 mt-[27px]'/>
-          </span>
+            <div className="p-2 bg-quinary rounded-full absolute right-0 top-0 mr-28 mt-12">
+              <a href="/notifications"><IoNotifications className="text-2xl" /></a>
+            </div>
+            <div>
+              <span className="flex items-center mr-6 mt-6">
+                <EditProfileDesktop />
+              </span>
+            </div>
         </div>
 
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} className="flex-1 overflow-y-auto">
 
         <div className="ml-6 mb-5 flex items-center justify-between">
-          <p className="text-left text-sm bg-quinary text-black border border-green-800 w-fit px-2 rounded">Date: {date.toLocaleDateString()}</p>
-          <form className="h-10 w-40 mr-6">
-            <select value={filter} className="bg-quinary border border-primary text-primary text-sm focus:ring-primary focus:border-primary block w-full p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full mt-1 py-1 px-1">
-              <option>Centra 1</option>
-              <option>Centra 2</option>
-              <option>Centra 3</option>
-            </select>
-          </form>
         </div>
         <div className='bg-quinary rounded-xl mt-4 mx-6'>
           <CentraMonitorTable dataType={dataType} handleDataTypeChange={handleDataTypeChange} />
@@ -83,7 +78,7 @@ const CentraActivityMonitor = () => {
               <h2 className='text-left font-medium text-xl mt-6 ml-2'>Statistics</h2>
 
               <form className="h-10 w-40">
-                <select onChange={handleChange} value={filter} className="bg-quaternary border border-primary text-primary text-sm focus:ring-primary focus:border-primary block w-[120px] p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full ml-6 mt-4 py-1 px-1">
+                <select onChange={handleChange} value={filter} className="bg-transparent border border-primary text-primary text-sm focus:ring-primary focus:border-primary block w-[120px] p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full ml-6 mt-4 py-1 px-1">
                   <option value="daily">Daily</option>
                   <option value="monthly">Monthly</option>
                 </select>

@@ -11,7 +11,7 @@ function NotificationsTable() {
   const [arrivalNotifications, setArrivalNotifications] = useState([]);
   const [showShipment, setShowShipment] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 5;
+  const itemsPerPage = 9;
   const navigate = useNavigate();
 
   const navigateToMap = (e) => {
@@ -103,13 +103,13 @@ function NotificationsTable() {
                 <p className="text-gray-500 text-left">{new Date(notification.timestamp).toDateString()}</p>
               </div>
             </div>
-            {showShipment ? (
+            {/* {showShipment ? (
               <button trackingNumber={notification.id} onClick={navigateToMap} className="bg-primary text-white font-bold px-4 py-2 rounded-lg focus:outline-none">
                 TRACK
               </button>
             ) : (
               null
-            )}
+            )} */}
           </div>
         ))}
         <div className="flex justify-center mt-4 space-x-2">
