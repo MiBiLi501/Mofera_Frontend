@@ -1,89 +1,91 @@
-import { fontWeight } from '@mui/system';
-import DataTable,{ createTheme } from 'react-data-table-component';
-
-// A super simple expandable component.
-const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+import React,{useState, useEffect } from 'react';
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  Pagination,
+} from "@nextui-org/react";
 
 const columns = [
 	{
-		name: 'Centra',
-		selector: row => "Centra Unit "+row.centra_id,
-        sortable: true,
-        width: "200px"   
-	},
-	{
-		name: 'Powder ID',
-		selector: row => "#"+row.id,
-        sortable: true,
-        width: "150px"   
+		key: "id",
+		label: "Powder ID",
 	},
     {
-		name: 'Weight',
-		selector: row => row.weight+" kg",
-        sortable: true,
-	},
+      key: "centra_id",
+      label: "Centra Unit",
+    },
     {
-		name: 'Date',
-		selector: row => row.floured_date,
-        sortable: true,
-        width: "150px"   
-	},
+      key: "weight",
+      label: "Weight"
+    },
+    {
+      key: "date",
+      label: "Floured Date",
+    },
 ];
-
-// const data = [
-//   	{
-// 		id: 1,
-// 		title: 'Centra Unit 1',
-//         WetLeavesID:'#123',
-// 		Weight: '30 kg',
-//         Date:"31 Aug 2023"
-// 	},
-// 	{
-// 		id: 2,
-// 		title: 'Centra Unit 2',
-//         WetLeavesID:'#123',
-// 		Weight: '30 kg',
-//         Date:"31 Aug 2023"
-// 	},
-//     {
-// 		id: 3,
-// 		title: 'Centra Unit 3',
-//         WetLeavesID:'#123',
-// 		Weight: '30 kg',
-//         Date:"31 Aug 2023"
-// 	},
-//     {
-// 		id: 4,
-// 		title: 'Centra Unit 4',
-//         WetLeavesID:'#123',
-// 		Weight: '30 kg',
-//         Date:"31 Aug 2023"
-// 	},
-//     {
-// 		id: 5,
-// 		title: 'Centra Unit 5',
-//         WetLeavesID:'#123',
-// 		Weight: '30 kg',
-//         Date:"31 Aug 2023"
-// 	},
-// ]
   
-function Table({data}) {
+function TablePowder({ data }) {
+	const itemsPerPage = 10;
+	const [currentPage, setCurrentPage] = useState(1);
   
-	return (
-		<DataTable
-      // customStyles={tableHeaderStyle}
-			columns={columns}
-			data={data}
-			// expandableRows
-			//expandableRowsComponent={ExpandedComponent}
-      pagination
-      theme="solarized"
-      fixedHeader
-      fixedHeaderScrollHeight="300px"
-      // style={tableStyle}
-		/>
+	const handlePageChange = (page) => {
+	  setCurrentPage(page);
+	};
+  
+	const totalPages = Math.ceil(data.length / itemsPerPage);
+	const paginatedRows = data.slice(
+	  (currentPage - 1) * itemsPerPage,
+	  currentPage * itemsPerPage
 	);
-};
-
-export default Table;
+  
+	const formatDateTime = (dateTimeString) => {
+	  if (!dateTimeString) return "N/A";
+	  const [date, time] = dateTimeString.split("T");
+	  return `${date} ${time}`;
+	};
+  
+	  return (
+	  <div className="flex items-center flex-col">
+		<Table
+		  aria-label="Example table with dynamic content"
+		  className="text-left drop-shadow-md border-collapse mb-5"
+		>
+		  <TableHeader columns={columns}>
+			{(column) => (
+			  <TableColumn key={column.key} className="bg-quinary text-black text-sm" style={{ textAlign: 'center' }}>
+				{column.label}
+			  </TableColumn>
+			)}
+		  </TableHeader>
+		  <TableBody items={paginatedRows} style={{ textAlign: 'center', color: 'black' }}>
+			{(item) => (
+			  <TableRow key={item.id}>
+				{columns.map((column) => (
+				  <TableCell key={column.key} className="text-base">
+					{column.key === "dateShipped" || column.key === "etaDatetime"
+					  ? formatDateTime(item[column.key])
+					  : item[column.key]}
+				  </TableCell>
+				))}
+			  </TableRow>
+			)}
+		  </TableBody>
+		</Table>
+  
+		<Pagination
+		  isCompact
+		  showControls
+		  total={totalPages}
+		  onChange={handlePageChange}
+		  color="quinary"
+		  className="drop-shadow-lg"
+		/>
+	  </div>
+	  );
+  };
+  
+  export default TablePowder;

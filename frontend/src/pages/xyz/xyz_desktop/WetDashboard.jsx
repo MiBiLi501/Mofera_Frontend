@@ -13,6 +13,7 @@ import mascot from "../../../assets/xyz/half-mascot.svg";
 import { getWetLeafDatas, getWetStats, getWetSummary } from '../../../../api/xyzAPI';
 import { getCurrentUser } from '../../../../api/profileAPI';
 import EditProfileDesktop from './EditProfileDesktop';
+import TableWet from './TableWet';
 
 const WetDashboard = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
@@ -204,10 +205,10 @@ const WetDashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="flex h-[440px] bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
+            <div className="flex bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
               <div className="text-2xl text-primary dark:text-gray-500 w-full">
-                <div className="text-left text-lg ml-3 text-black font-semibold">Wet Leaves Data</div>
-                <Table data={filteredWetDatas.map((data) => ({ ...data, "date": formatDate(data.retrieval_date) }))} />
+                <div className="text-left text-lg ml-3 text-black font-semibold mb-4">Wet Leaves Data</div>
+                <TableWet data={filteredWetDatas.map((data) => ({ ...data, "date": formatDate(data.retrieval_date) }))} />
               </div>
             </div>
             <div className="flex flex-col bg-quinary rounded-3xl dark:bg-gray-800 p-4">

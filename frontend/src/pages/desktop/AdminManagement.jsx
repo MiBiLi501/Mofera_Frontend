@@ -227,11 +227,9 @@ function AdminPage() {
   };
 
   const handleSearch = (searchTerm) => {
-    // Filter rows based on search term
+    // Filter rows based on search term and id field
     const filteredData = rows.filter((row) =>
-      Object.values(row).some((value) =>
-        String(value).toLowerCase().includes(searchTerm.toLowerCase())
-      )
+      String(row.id).toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredRows(filteredData);
   };

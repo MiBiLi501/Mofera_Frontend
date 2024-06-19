@@ -13,7 +13,7 @@ import {
 const columns = [
     {
       key: "id",
-      label: "ID",
+      label: "Shipment ID",
     },
 
     {

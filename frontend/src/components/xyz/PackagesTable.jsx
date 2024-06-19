@@ -107,15 +107,15 @@ function PackagesTable({ searchQuery }) {
   };
 
   return (
-    <div className="bg-quinary px-4 pt-3 pb-4 rounded-lg flex-1 overflow">
-      <div className="relative">
-        <p className="text-xl text-left text-black font-medium ml-4 pt-6 mb-4">
+    <div className="bg-quinary px-5 pt-3 pb-4 rounded-3xl flex-1 overflow">
+      <div className="relative mb-1 flex items-center">
+        <p className="text-2xl text-left text-black font-bold ml-4 mb-4 items-center mt-2">
           Package Status
         </p>
         <div>
         <form className="w-40">
             <select
-              className="bg-quinary absolute top-0 right-0 border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-40 mt-5"
+              className="bg-quinary absolute top-0 right-0 border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-40 mt-3"
               onChange={handleCentraChange}
               value={selectedCentra}
             >
@@ -129,7 +129,7 @@ function PackagesTable({ searchQuery }) {
           </form>
           <form className="w-40">
             <select
-              className="bg-quinary absolute top-0 right-0 border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-4 mt-5"
+              className="bg-quinary absolute top-0 right-0 border border-primary text-primary text-sm focus:ring-primary focus:border-primary block p-1 dark:bg-primary dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:primary dark:focus:border-primary rounded-full px-1 mr-4 mt-3"
               onChange={(e) => handleSortByChange(e.target.value)}
               value={sortBy}
             >

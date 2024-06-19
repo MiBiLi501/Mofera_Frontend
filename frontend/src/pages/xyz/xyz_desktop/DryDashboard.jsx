@@ -13,6 +13,7 @@ import mascot from "../../../assets/xyz/half-mascot.svg";
 import { getDryLeafDatas, getDryStats, getDrySummary } from '../../../../api/xyzAPI';
 import { getCurrentUser } from '../../../../api/profileAPI';
 import EditProfileDesktop from './EditProfileDesktop';
+import TableDry from './TableDry';
 
 const DryDashboard = () => {
   const [isSidebarMinimized, setIsSidebarMinimized] = useState(false);
@@ -205,10 +206,10 @@ const DryDashboard = () => {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="flex h-[440px] bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
+            <div className="flex bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
               <div className="text-2xl text-primary dark:text-gray-500 w-full">
-                <div className="text-left text-lg ml-3 text-black font-semibold">Dry Leaves Data</div>
-                <Table data={filteredDryDatas.map((data) => ({ ...data, "date": formatDate(data.dried_date)}))}/>
+                <div className="text-left text-lg ml-3 text-black font-semibold mb-4">Dry Leaves Data</div>
+                <TableDry data={filteredDryDatas.map((data) => ({ ...data, "date": formatDate(data.dried_date)}))}/>
               </div>
             </div>
             <div className="flex flex-col bg-quinary rounded-3xl dark:bg-gray-800 p-4">

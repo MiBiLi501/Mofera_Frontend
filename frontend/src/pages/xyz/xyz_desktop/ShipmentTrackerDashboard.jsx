@@ -187,12 +187,18 @@ const ShipmentTrackerDashboard = () => {
                 </div>
             </div>
 
-                <div className="bg-white p-4 rounded-lg shadow">
-                    <h2 className="text-xl text-left font-semibold mb-4">Shipping Information</h2>
-                    <div className="overflow-auto">
-                        <ShipmentTable data={shippingData}/>
-                    </div>
+            <div className="grid grid-cols gap-4">
+              <div className="flex h-[540px] bg-quinary items-center justify-center rounded-3xl dark:bg-gray-800 p-4">
+                <div className="text-2xl text-primary dark:text-gray-500 w-full">
+                <div className="flex justify-between items-center mb-4">
+                  <div className="text-left text-2xl ml-3 mb-3 text-black font-semibold">Shipping Information</div>
+                  
                 </div>
+                    <ShipmentTable data={shippingData}/>
+                </div>
+              </div>
+              
+            </div>
             </motion.div>
         </div>
     </div>
