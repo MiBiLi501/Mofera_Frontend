@@ -58,7 +58,7 @@ function EditProfileContent({ role, name, email, centraUnit, formSubmitted, hand
         };
     
         try {
-            const response = await axios.put('http://127.0.0.1:8000/profile/', payload, {
+            const response = await axios.put('https://mofera-backend-fork-ten.vercel.app/profile/', payload, {
                 headers: {
                     'Content-Type': 'application/json',
                 }
